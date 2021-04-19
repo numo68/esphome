@@ -340,6 +340,7 @@ async def to_code(config):
     cg.add_build_flag("-Wno-unused-variable")
     cg.add_build_flag("-Wno-unused-but-set-variable")
     cg.add_build_flag("-Wno-sign-compare")
+    cg.add_build_flag("-Wstack-usage=512")
 
     if CORE.using_arduino:
         CORE.add_job(add_arduino_global_workaround)
