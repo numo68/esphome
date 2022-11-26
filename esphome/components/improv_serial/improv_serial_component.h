@@ -6,6 +6,7 @@
 #include "esphome/core/helpers.h"
 
 #include <improv.h>
+#include <vector>
 
 #ifdef USE_ARDUINO
 #include <HardwareSerial.h>
@@ -51,7 +52,7 @@ class ImprovSerialComponent : public Component {
   void write_data_(std::vector<uint8_t> &data);
 
 #ifdef USE_ARDUINO
-  HardwareSerial *hw_serial_{nullptr};
+  Stream *hw_serial_{nullptr};
 #endif
 #ifdef USE_ESP_IDF
   uart_port_t uart_num_;
