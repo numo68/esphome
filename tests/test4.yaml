@@ -932,13 +932,17 @@ display:
       number: GPIO1
       allow_other_uses: true
 
-  - platform: ili9341
+  - platform: ili9xxx
     id: my_ili9341
     model: TFT 2.4
     rotation: 180
-    cs_pin: 22
-    dc_pin: 21
-    led_pin: 5
+    spi_id: spi_id_1
+    cs_pin:
+      number: 22
+      allow_other_uses: true
+    dc_pin:
+      number: 21
+      allow_other_uses: true
     pages:
       - id: page_1
         lambda: |-

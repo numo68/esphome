@@ -2,6 +2,7 @@
 
 #include "esphome/core/component.h"
 #include "esphome/components/binary_sensor/binary_sensor.h"
+#include "esphome/components/font/font.h"
 #include "esphome/components/display/display_buffer.h"
 
 #include <map>
@@ -35,7 +36,7 @@ class TouchGUIComponent : public PollingComponent {
   void set_button_foreground_color(const Color &col) { this->button_foreground_color_ = col; }
   void set_button_active_foreground_color(const Color &col) { this->button_active_foreground_color_ = col; }
   void set_button_border_color(const Color &col) { this->button_border_color_ = col; }
-  void set_button_font(display::Font *fnt) { this->button_font_ = fnt; }
+  void set_button_font(font::Font *fnt) { this->button_font_ = fnt; }
   void set_writer(button_writer_t &&writer) { this->writer_ = writer; }
   void add_on_update_callback(std::function<void()> &&callback);
 
@@ -62,7 +63,7 @@ class TouchGUIComponent : public PollingComponent {
   const Color &get_button_active_foreground_color() const { return this->button_active_foreground_color_; }
   const Color &get_button_border_color() const { return this->button_border_color_; }
 
-  display::Font *get_button_font() const { return this->button_font_; }
+  font::Font *get_button_font() const { return this->button_font_; }
 
   optional<button_writer_t> &get_writer() { return this->writer_; }
 
@@ -73,7 +74,7 @@ class TouchGUIComponent : public PollingComponent {
   display::DisplayBuffer *display_;
   std::vector<TouchGUIDrawable *> drawables_;
   RadioGroupMap groups_;
-  display::Font *button_font_{nullptr};
+  font::Font *button_font_{nullptr};
   Color button_background_color_{display::COLOR_OFF};
   Color button_active_background_color_{display::COLOR_ON};
   Color button_foreground_color_{display::COLOR_ON};
@@ -137,7 +138,7 @@ class TouchGUIButton : public binary_sensor::BinarySensor, public Component, pub
   void set_foreground_color(const Color &col) { this->foreground_color_ = col; }
   void set_active_foreground_color(const Color &col) { this->active_foreground_color_ = col; }
   void set_border_color(const Color &col) { this->border_color_ = col; }
-  void set_font(display::Font *fnt) { this->font_ = fnt; }
+  void set_font(font::Font *fnt) { this->font_ = fnt; }
   void set_radio_group(int g) { this->radio_group_ = g; }
   void set_initial(bool val) { this->initial_ = val; }
   void set_touch_time(uint32_t t) { this->touch_time_ = t; }
@@ -184,7 +185,7 @@ class TouchGUIButton : public binary_sensor::BinarySensor, public Component, pub
   }
 
   /// Get the font to draw the text, taking the parent's one if not overparametrized in the button itself.
-  display::Font *get_font() const { return this->font_ != nullptr ? this->font_ : parent_->get_button_font(); }
+  font::Font *get_font() const { return this->font_ != nullptr ? this->font_ : parent_->get_button_font(); }
 
   TouchGUIButtonType get_type() const { return this->type_; }
   int get_radio_group() const { return this->radio_group_; }
@@ -225,7 +226,7 @@ class TouchGUIButton : public binary_sensor::BinarySensor, public Component, pub
   uint16_t x_min_, x_max_, y_min_, y_max_;
   bool touch_state_{false};
   uint32_t touch_time_;
-  display::Font *font_{nullptr};
+  font::Font *font_{nullptr};
   optional<Color> background_color_{};
   optional<Color> active_background_color_{};
   optional<Color> foreground_color_{};
