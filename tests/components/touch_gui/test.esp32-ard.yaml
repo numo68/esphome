@@ -1,0 +1,43 @@
+display:
+  - platform: ili9xxx
+    id: my_ili9341
+    model: TFT 2.4
+    rotation: 180
+    cs_pin:
+      number: 22
+    dc_pin:
+      number: 21
+    invert_colors: false
+    pages:
+      - id: page_1
+        lambda: |-
+          it.fill(COLOR_OFF);
+          it.print(120, 0, id(font1), TextAlign::TOP_CENTER, "Page 1");
+          id(my_gui).draw();
+      - id: page_2
+        lambda: |-
+          it.fill(COLOR_OFF);
+          it.circle(120, 240, 10, COLOR_ON);
+          it.print(120, 0, id(font1), TextAlign::TOP_CENTER, "Page 2");
+          id(my_gui).draw();
+
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+  miso_pin: 19
+
+touch_gui:
+  id: my_gui
+  display_id: my_ili9341
+  button_colors:
+    background: color_gray20
+    active_background: color_gray50
+    foreground: color_white
+    active_foreground: color_black
+    border: color_white
+  button_font: font1
+  on_update:
+    then:
+      - lambda: 'ESP_LOGI("touch_gui", "Visual state was updated");'
+
+<<: !include common.yaml
